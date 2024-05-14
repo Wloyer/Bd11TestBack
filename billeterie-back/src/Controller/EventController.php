@@ -10,6 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use App\Service\PdfGenerator;
 
 #[Route('/event')]
 class EventController extends AbstractController
@@ -77,5 +78,35 @@ class EventController extends AbstractController
         }
 
         return $this->redirectToRoute('app_event_index', [], Response::HTTP_SEE_OTHER);
+    }
+
+    public function generatePdfAction(Request $request, PdfGenerator $pdfGenerator, EventRepository $eventRepository)
+    {
+
+        // Récupérer l'identifiant de l'événement à partir de la requête ou d'autres sources
+        $eventId = $request->query->get('eventId');
+
+        // Récupérer l'événement à partir de la base de données
+        $event = $eventRepository->find($eventId);
+
+        // Vérifier si l'événement existe
+        if (!$event) {
+            throw $this->createNotFoundException('Event not found');
+        }
+        // Obtenir les données nécessaires à partir de la requête ou d'autres sources
+        $eventName = $event->getName();
+        $reservationDate = $event->getBookingDate()->format('Y-m-d');
+        $eventDate = $event->getEventDate()->format('Y-m-d');
+        $numberOfAttendees = 5;
+        $reservationUuid = "faut je cherche0";
+
+        // Générer le PDF en utilisant le service PdfGenerator
+        $pdfContent = $pdfGenerator->generatePdf($eventName, $eventDate, $reservationDate, $numberOfAttendees, $reservationUuid);
+
+        // Renvoyer le PDF en réponse à la requête HTTP
+        return new Response($pdfContent, 200, array(
+            'Content-Type' => 'application/pdf',
+            'Content-Disposition' => 'attachment; filename="reservation.pdf"'
+        ));
     }
 }
