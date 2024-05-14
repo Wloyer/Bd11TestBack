@@ -3,3 +3,7 @@ controllers:
     resource: '../src/Controller/'
     type: attribute
     prefix: /api
+
+generate_pdf:
+    path: /generate-pdf
+    controller: App\Controller\EventController::generatePdfAction
