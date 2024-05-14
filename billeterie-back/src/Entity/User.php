@@ -32,7 +32,7 @@ class User
     private ?string $password = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
-    private ?\DateTimeInterface $birthDtae = null;
+    private ?\DateTimeInterface $birthDate = null;
 
     #[ORM\Column(length: 255)]
     private ?string $role = null;
@@ -113,14 +113,14 @@ class User
         return $this;
     }
 
-    public function getBirthDtae(): ?\DateTimeInterface
+    public function getBirthDate(): ?\DateTimeInterface
     {
-        return $this->birthDtae;
+        return $this->birthDate;
     }
 
-    public function setBirthDtae(\DateTimeInterface $birthDtae): static
+    public function setBirthDate(\DateTimeInterface $birthDate): static
     {
-        $this->birthDtae = $birthDtae;
+        $this->birthDate = $birthDate;
 
         return $this;
     }
