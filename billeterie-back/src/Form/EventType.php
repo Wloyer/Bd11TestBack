@@ -34,15 +34,15 @@ class EventType extends AbstractType
             ->add('isAdult')
             ->add('isGuestAdult')
             ->add('location')
-            ->add('idUser', EntityType::class, [
-                'class' => User::class,
-                'choice_label' => 'id',
-                'multiple' => true,
-            ])
-            ->add('schedule', EntityType::class, [
-                'class' => Schedule::class,
-                'choice_label' => 'id',
-            ])
+            // ->add('idUser', EntityType::class, [
+            //     'class' => User::class,
+            //     'choice_label' => 'id',
+            //     'multiple' => true,
+            // ])
+            // ->add('schedule', EntityType::class, [
+            //     'class' => Schedule::class,
+            //     'choice_label' => 'id',
+            // ])
         ;
     }
 
