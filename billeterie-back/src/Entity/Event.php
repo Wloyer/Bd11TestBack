@@ -44,13 +44,13 @@ class Event
     private ?bool $nbTicket = null;
 
     #[ORM\Column]
-    private ?bool $isSoldOut = null;
+    private ?bool $isSoldOut = false;
 
     #[ORM\Column]
-    private ?bool $isAdult = null;
+    private ?bool $isAdult = true;
 
     #[ORM\Column]
-    private ?bool $isGuestAdult = null;
+    private ?bool $isGuestAdult = true;
 
     #[ORM\Column(length: 255)]
     private ?string $location = null;
