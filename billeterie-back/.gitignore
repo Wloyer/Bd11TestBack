@@ -7,4 +7,20 @@
 /public/bundles/
 /var/
 /vendor/
+.idea/codeception.xml
+.idea/material_theme_project_new.xml
+.idea/php.xml
+.idea/phpspec.xml
+.idea/phpunit.xml
+.idea/vcs.xml
 ###< symfony/framework-bundle ###
+
+###> symfony/phpunit-bridge ###
+.phpunit.result.cache
+/phpunit.xml
+###< symfony/phpunit-bridge ###
+
+###> phpunit/phpunit ###
+/phpunit.xml
+.phpunit.result.cache
+###< phpunit/phpunit ###
