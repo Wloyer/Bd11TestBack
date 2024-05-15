@@ -23,6 +23,28 @@ class EventController extends AbstractController
         ]);
     }
 
+    //fonctionnalité permettant de retourner les informations de l'event nécessaires pour l'utilisateur visiteur
+    #[Route('/event-informations', name: 'app_event_indexation', methods: ['GET'])]
+    public function indexatiton(EventRepository $eventInformationRepository): Response
+    {
+        // return $this->render('event/index.html.twig', [
+        //     'events' => $eventRepository->findAll(),
+        // ]);
+        $events = $eventInformationRepository->findAll();
+        // return new JsonResponse($events);
+            $size = sizeof($events);
+            $results = array();
+            for($i = 0 ; $i < $size; $i++){
+                $temp = array("name"=> $events[$i]->getName(), "price" => $events[$i]->getPrice(), "date" =>$events[$i]->getEventDate(), "image" => $events[$i]->getImageEvent() );
+                array_push($results, $temp );
+
+            }
+        $response = new Response(json_encode( array( "resultat" => $results) ));
+        $response->headers->set('Content-Type', 'application/json');
+        return $response; 
+    }
+
+
     #[Route('/new', name: 'app_event_new', methods: ['GET', 'POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
