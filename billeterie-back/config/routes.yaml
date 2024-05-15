@@ -3,3 +3,13 @@ controllers:
         path: ../src/Controller/
         namespace: App\Controller
     type: attribute
+    prefix: /api
+
+generate_pdf:
+    path: /generate-pdf
+    controller: App\Controller\EventController::generatePdfAction
+
+admin_routes:
+    resource: '../src/AdminController/'
+    type: attribute
+    prefix: /admin
