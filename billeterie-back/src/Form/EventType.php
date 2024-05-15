@@ -35,7 +35,7 @@ class EventType extends AbstractType
                 'widget' => 'single_text',
                 'input' => 'datetime',
                 'html5' => false,  // Désactiver l'option html5
-                'format' => 'yyyy-MM-dd\'T\'HH:mm:ss',
+                'format' => 'yyyy-MM-dd',
             ])
             ->add('type', TextType::class)
             ->add('description', TextType::class)
