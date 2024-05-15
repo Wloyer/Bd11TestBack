@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Entity;
 
 use App\Repository\EventRepository;
@@ -55,9 +54,6 @@ class Event
     #[ORM\Column(length: 255)]
     private ?string $location = null;
 
-    /**
-     * @var Collection<int, User>
-     */
     #[ORM\ManyToMany(targetEntity: User::class, inversedBy: 'events')]
     private Collection $idUser;
 
@@ -85,7 +81,7 @@ class Event
         return $this->name;
     }
 
-    public function setName(string $name): static
+    public function setName(string $name): self
     {
         $this->name = $name;
 
@@ -97,7 +93,7 @@ class Event
         return $this->price;
     }
 
-    public function setPrice(int $price): static
+    public function setPrice(int $price): self
     {
         $this->price = $price;
 
@@ -109,7 +105,7 @@ class Event
         return $this->eventHour;
     }
 
-    public function setEventHour(\DateTimeInterface $eventHour): static
+    public function setEventHour(\DateTimeInterface $eventHour): self
     {
         $this->eventHour = $eventHour;
 
@@ -121,7 +117,7 @@ class Event
         return $this->bookingDate;
     }
 
-    public function setBookingDate(\DateTimeInterface $bookingDate): static
+    public function setBookingDate(\DateTimeInterface $bookingDate): self
     {
         $this->bookingDate = $bookingDate;
 
@@ -133,7 +129,7 @@ class Event
         return $this->eventDate;
     }
 
-    public function setEventDate(\DateTimeInterface $eventDate): static
+    public function setEventDate(\DateTimeInterface $eventDate): self
     {
         $this->eventDate = $eventDate;
 
@@ -145,7 +141,7 @@ class Event
         return $this->type;
     }
 
-    public function setType(string $type): static
+    public function setType(string $type): self
     {
         $this->type = $type;
 
@@ -157,7 +153,7 @@ class Event
         return $this->description;
     }
 
-    public function setDescription(string $description): static
+    public function setDescription(string $description): self
     {
         $this->description = $description;
 
@@ -169,19 +165,19 @@ class Event
         return $this->cancel;
     }
 
-    public function setCancel(bool $cancel): static
+    public function setCancel(bool $cancel): self
     {
         $this->cancel = $cancel;
 
         return $this;
     }
 
-    public function isNbTicket(): ?bool
+    public function getNbTicket(): ?int
     {
         return $this->nbTicket;
     }
 
-    public function setNbTicket(bool $nbTicket): static
+    public function setNbTicket(int $nbTicket): self
     {
         $this->nbTicket = $nbTicket;
 
@@ -193,7 +189,7 @@ class Event
         return $this->isSoldOut;
     }
 
-    public function setSoldOut(bool $isSoldOut): static
+    public function setIsSoldOut(bool $isSoldOut): self
     {
         $this->isSoldOut = $isSoldOut;
 
@@ -205,7 +201,7 @@ class Event
         return $this->isAdult;
     }
 
-    public function setAdult(bool $isAdult): static
+    public function setIsAdult(bool $isAdult): self
     {
         $this->isAdult = $isAdult;
 
@@ -217,7 +213,7 @@ class Event
         return $this->isGuestAdult;
     }
 
-    public function setGuestAdult(bool $isGuestAdult): static
+    public function setIsGuestAdult(bool $isGuestAdult): self
     {
         $this->isGuestAdult = $isGuestAdult;
 
@@ -229,7 +225,7 @@ class Event
         return $this->location;
     }
 
-    public function setLocation(string $location): static
+    public function setLocation(string $location): self
     {
         $this->location = $location;
 
@@ -244,7 +240,7 @@ class Event
         return $this->idUser;
     }
 
-    public function addIdUser(User $idUser): static
+    public function addIdUser(User $idUser): self
     {
         if (!$this->idUser->contains($idUser)) {
             $this->idUser->add($idUser);
@@ -253,7 +249,7 @@ class Event
         return $this;
     }
 
-    public function removeIdUser(User $idUser): static
+    public function removeIdUser(User $idUser): self
     {
         $this->idUser->removeElement($idUser);
 
@@ -265,7 +261,7 @@ class Event
         return $this->schedule;
     }
 
-    public function setSchedule(?Schedule $schedule): static
+    public function setSchedule(?Schedule $schedule): self
     {
         $this->schedule = $schedule;
 
@@ -277,7 +273,7 @@ class Event
         return $this->imageEvent;
     }
 
-    public function setImageEvent(string $imageEvent): static
+    public function setImageEvent(string $imageEvent): self
     {
         $this->imageEvent = $imageEvent;
 
@@ -289,7 +285,7 @@ class Event
         return $this->soldTickets;
     }
 
-    public function setSoldTickets(int $soldTickets): static
+    public function setSoldTickets(int $soldTickets): self
     {
         $this->soldTickets = $soldTickets;
 
