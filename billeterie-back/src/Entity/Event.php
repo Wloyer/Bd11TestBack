@@ -22,7 +22,7 @@ class Event
     #[ORM\Column]
     private ?int $price = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::TIME_MUTABLE)]
     private ?\DateTimeInterface $eventHour = null;
 
     #[ORM\Column(type: Types::DATE_MUTABLE)]
@@ -40,8 +40,8 @@ class Event
     #[ORM\Column]
     private ?bool $cancel = null;
 
-    #[ORM\Column]
-    private ?bool $nbTicket = null;
+    #[ORM\Column(type: 'integer')]
+    private ?int $nbTicket = null;
 
     #[ORM\Column]
     private ?bool $isSoldOut = false;
@@ -63,6 +63,12 @@ class Event
 
     #[ORM\ManyToOne(inversedBy: 'idEvent')]
     private ?Schedule $schedule = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $imageEvent = null;
+
+    #[ORM\Column]
+    private ?int $soldTickets = null;
 
     public function __construct()
     {
@@ -262,6 +268,30 @@ class Event
     public function setSchedule(?Schedule $schedule): static
     {
         $this->schedule = $schedule;
+
+        return $this;
+    }
+
+    public function getImageEvent(): ?string
+    {
+        return $this->imageEvent;
+    }
+
+    public function setImageEvent(string $imageEvent): static
+    {
+        $this->imageEvent = $imageEvent;
+
+        return $this;
+    }
+
+    public function getSoldTickets(): ?int
+    {
+        return $this->soldTickets;
+    }
+
+    public function setSoldTickets(int $soldTickets): static
+    {
+        $this->soldTickets = $soldTickets;
 
         return $this;
     }

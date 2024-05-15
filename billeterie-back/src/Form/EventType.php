@@ -17,8 +17,10 @@ class EventType extends AbstractType
         $builder
             ->add('name')
             ->add('price')
+            ->add('imageEvent')
             ->add('eventHour', null, [
-                'widget' => 'single_text',
+                'widget' => 'choice',
+                'input' => 'datetime',
             ])
             ->add('bookingDate', null, [
                 'widget' => 'single_text',
@@ -30,6 +32,7 @@ class EventType extends AbstractType
             ->add('description')
             ->add('cancel')
             ->add('nbTicket')
+            ->add('soldTickets')
             ->add('isSoldOut')
             ->add('isAdult')
             ->add('isGuestAdult')
