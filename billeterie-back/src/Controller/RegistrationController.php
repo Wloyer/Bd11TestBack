@@ -31,12 +31,6 @@ class RegistrationController extends AbstractController
         }
 
         
-        if (!isset($data['ageConfirmed']) || !$data['ageConfirmed']) {
-            return $this->json([
-                'errors' => 'Vous devez confirmer que tous les participants respectent l\'exigence d\'âge.',
-            ], Response::HTTP_BAD_REQUEST);
-        }
-
         if ($form->isSubmitted() && $form->isValid()) {
             // Encode the plain password
             $user->setPassword(
