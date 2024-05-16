@@ -1,13 +1,13 @@
 <?php
 namespace App\Controller;
 
+use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
-use Symfony\Component\Security\Core\User\UserInterface;
 
 class LoginController extends AbstractController
 {
@@ -22,9 +22,10 @@ class LoginController extends AbstractController
         }
 
         // Get the authenticated user
+        /** @var User $user */
         $user = $this->getUser();
 
-        if (!$user instanceof UserInterface) {
+        if (!$user instanceof User) {
             return new JsonResponse(['error' => 'User not found'], Response::HTTP_UNAUTHORIZED);
         }
 
@@ -32,7 +33,8 @@ class LoginController extends AbstractController
             'message' => 'Logged in successfully',
             'user' => [
                 'email' => $user->getUserIdentifier(),
-                'roles' => $user->getRoles()
+                'roles' => $user->getRoles(),
+                'id' => $user->getId(), 
             ]
         ], Response::HTTP_OK);
     }
@@ -43,3 +45,4 @@ class LoginController extends AbstractController
         throw new \Exception('Don\'t forget to activate logout in security.yaml');
     }
 }
+
