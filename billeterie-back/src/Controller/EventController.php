@@ -16,10 +16,6 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 #[Route('/event')]
 class EventController extends AbstractController
 {
-    // Inject the AuthorizationCheckerInterface to check roles
-    public function __construct(private AuthorizationCheckerInterface $authorizationChecker)
-    {
-    }
 
     #[Route('/', name: 'app_event_index', methods: ['GET'])]
     public function index(EventRepository $eventRepository): JsonResponse
@@ -31,10 +27,7 @@ class EventController extends AbstractController
     #[Route('/event-informations', name: 'app_event_indexation', methods: ['GET'])]
     public function indexatiton(EventRepository $eventInformationRepository): JsonResponse
     {
-        // Check if the user has ROLE_ADMIN
-        if (!$this->isGranted('ROLE_ADMIN')) {
-            throw $this->createAccessDeniedException('Only admins can create events.');
-        }
+
         $events = $eventInformationRepository->findAll();
         $results = array_map(function ($event) {
             return [
