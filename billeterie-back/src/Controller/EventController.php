@@ -31,10 +31,6 @@ class EventController extends AbstractController
     #[Route('/event-informations', name: 'app_event_indexation', methods: ['GET'])]
     public function indexatiton(EventRepository $eventInformationRepository): JsonResponse
     {
-        // Check if the user has ROLE_ADMIN
-        if (!$this->isGranted('ROLE_ADMIN')) {
-            throw $this->createAccessDeniedException('Only admins can create events.');
-        }
         $events = $eventInformationRepository->findAll();
         $results = array_map(function ($event) {
             return [
@@ -46,6 +42,7 @@ class EventController extends AbstractController
         }, $events);
         return new JsonResponse(['resultat' => $results]);
     }
+    
 
     #[Route('/new', name: 'app_event_new', methods: ['POST'])]
     public function new(Request $request, EntityManagerInterface $entityManager): JsonResponse
