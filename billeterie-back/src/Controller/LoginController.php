@@ -26,7 +26,7 @@ class LoginController extends AbstractController
         return new JsonResponse(['message' => 'Logged in successfully', 'username' => $lastUsername], Response::HTTP_OK);
     }
 
-    #[Route('/api/logout', name: 'app_logout', methods: ['POST'])]
+    #[Route('/logout', name: 'app_logout', methods: ['POST'])]
     public function logout(): void
     {
         throw new \Exception('Don\'t forget to activate logout in security.yaml');

@@ -16,10 +16,6 @@ use Symfony\Component\Security\Core\Authorization\AuthorizationCheckerInterface;
 #[Route('/event')]
 class EventController extends AbstractController
 {
-    // Inject the AuthorizationCheckerInterface to check roles
-    public function __construct(private AuthorizationCheckerInterface $authorizationChecker)
-    {
-    }
 
     #[Route('/', name: 'app_event_index', methods: ['GET'])]
     public function index(EventRepository $eventRepository): JsonResponse
@@ -31,6 +27,7 @@ class EventController extends AbstractController
     #[Route('/event-informations', name: 'app_event_indexation', methods: ['GET'])]
     public function indexatiton(EventRepository $eventInformationRepository): JsonResponse
     {
+
         $events = $eventInformationRepository->findAll();
         $results = array_map(function ($event) {
             return [
