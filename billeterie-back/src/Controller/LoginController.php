@@ -14,13 +14,14 @@ class LoginController extends AbstractController
     #[Route('/login', name: 'app_login', methods: ['POST'])]
     public function login(Request $request, AuthenticationUtils $authenticationUtils): JsonResponse
     {
+        // Get the login error if there is one
         $error = $authenticationUtils->getLastAuthenticationError();
 
         if ($error) {
             return new JsonResponse(['error' => $error->getMessageKey()], Response::HTTP_UNAUTHORIZED);
         }
 
-        
+        // Get the authenticated user
         $user = $this->getUser();
 
         if (!$user instanceof UserInterface) {
@@ -29,8 +30,10 @@ class LoginController extends AbstractController
 
         return new JsonResponse([
             'message' => 'Logged in successfully',
-            'username' => $user->getUserIdentifier(), 
-            'roles' => $user->getRoles()
+            'user' => [
+                'email' => $user->getUserIdentifier(),
+                'roles' => $user->getRoles()
+            ]
         ], Response::HTTP_OK);
     }
 
