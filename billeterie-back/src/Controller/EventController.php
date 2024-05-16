@@ -35,6 +35,8 @@ class EventController extends AbstractController
                 'price' => $event->getPrice(),
                 'date' => $event->getEventDate()->format('Y-m-d H:i:s'),
                 'image' => $event->getImageEvent(),
+                'description' => $event->getDescription(),
+                'id' => $event->getId(),
             ];
         }, $events);
         return new JsonResponse(['resultat' => $results]);
@@ -118,5 +120,25 @@ class EventController extends AbstractController
             'Content-Type' => 'application/pdf',
             'Content-Disposition' => 'attachment; filename="reservation.pdf"'
         ]);
+    }
+
+    #[Route('/{id}/reserve', name: 'app_event_reserve', methods: ['POST'])]
+    public function reserve(Event $event, EntityManagerInterface $entityManager): JsonResponse
+    {
+        $user = $this->getUser();
+    
+        if (!$user || !in_array('ROLE_USER', $user->getRoles())) {
+            return new JsonResponse(['status' => 'Unauthorized'], Response::HTTP_UNAUTHORIZED);
+        }
+    
+        if ($event->getIdUser()->contains($user)) {
+            return new JsonResponse(['status' => 'Already reserved'], Response::HTTP_CONFLICT);
+        }
+    
+        $event->addIdUser($user);
+        $entityManager->persist($event);
+        $entityManager->flush();
+    
+        return new JsonResponse(['status' => 'Reservation successful']);
     }
 }
