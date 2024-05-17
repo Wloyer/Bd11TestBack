@@ -10,7 +10,7 @@ class ScheduleTest extends WebTestCase
     public function testIndex(): void
     {
         $client = static::createClient();
-        $client->request('GET', '/api/schedule');
+        $client->request('GET', '/api/schedule'); 
 
         $this->assertResponseIsSuccessful();
         $this->assertInstanceOf('Symfony\Component\HttpFoundation\JsonResponse', $client->getResponse());
