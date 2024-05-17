@@ -37,16 +37,16 @@ class ScheduleController extends AbstractController
             $entityManager->persist($schedule);
             $entityManager->flush();
     
-            // Retourne du JSON avec l'ID du nouvel horaire créé
+            
             return $this->json(['id' => $schedule->getId()], Response::HTTP_CREATED);
         }
     
-        // retourne du JSON avec les erreurs
+        
         return $this->json(['errors' => (string) $form->getErrors(true)], Response::HTTP_BAD_REQUEST);
     }
 
     #[Route('/{id}', name: 'app_schedule_show', methods: ['GET'])]
-    public function show(Schedule $schedule): JsonResponse
+    public function show(Schedule $schedule): Response
     {
         return $this->json($schedule);
     }
