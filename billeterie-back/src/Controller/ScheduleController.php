@@ -10,44 +10,45 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 #[Route('/schedule')]
 class ScheduleController extends AbstractController
 {
     #[Route('/', name: 'app_schedule_index', methods: ['GET'])]
-    public function index(ScheduleRepository $scheduleRepository): Response
+    public function index(ScheduleRepository $scheduleRepository): JsonResponse
     {
-        return $this->render('schedule/index.html.twig', [
-            'schedules' => $scheduleRepository->findAll(),
-        ]);
+        // return $this->render('schedule/index.html.twig', [
+        //     'schedules' => $scheduleRepository->findAll(),
+        // ]);
+
+        $schedules = $scheduleRepository->findAll();
+        return $this->json(['schedules' => $schedules]);
     }
 
     #[Route('/new', name: 'app_schedule_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager): JsonResponse
     {
         $schedule = new Schedule();
         $form = $this->createForm(ScheduleType::class, $schedule);
         $form->handleRequest($request);
-
+    
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($schedule);
             $entityManager->flush();
-
-            return $this->redirectToRoute('app_schedule_index', [], Response::HTTP_SEE_OTHER);
+    
+            
+            return $this->json(['id' => $schedule->getId()], Response::HTTP_CREATED);
         }
-
-        return $this->render('schedule/new.html.twig', [
-            'schedule' => $schedule,
-            'form' => $form,
-        ]);
+    
+        
+        return $this->json(['errors' => (string) $form->getErrors(true)], Response::HTTP_BAD_REQUEST);
     }
 
     #[Route('/{id}', name: 'app_schedule_show', methods: ['GET'])]
     public function show(Schedule $schedule): Response
     {
-        return $this->render('schedule/show.html.twig', [
-            'schedule' => $schedule,
-        ]);
+        return $this->json($schedule);
     }
 
     #[Route('/{id}/edit', name: 'app_schedule_edit', methods: ['GET', 'POST'])]
@@ -68,7 +69,7 @@ class ScheduleController extends AbstractController
         ]);
     }
 
-    #[Route('/{id}', name: 'app_schedule_delete', methods: ['POST'])]
+    #[Route('/{id}/delete', name: 'app_schedule_delete', methods: ['POST'])]
     public function delete(Request $request, Schedule $schedule, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$schedule->getId(), $request->getPayload()->get('_token'))) {
