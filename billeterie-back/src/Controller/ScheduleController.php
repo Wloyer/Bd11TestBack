@@ -43,7 +43,7 @@ class ScheduleController extends AbstractController
     
         
         return $this->json(['errors' => (string) $form->getErrors(true)], Response::HTTP_BAD_REQUEST);
-    }
+    } 
 
     #[Route('/{id}', name: 'app_schedule_show', methods: ['GET'])]
     public function show(Schedule $schedule): Response
